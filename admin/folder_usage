@@ -1,0 +1,2 @@
+#!/bin/bash
+find ./ -maxdepth 1 -mindepth 1 | xargs -n1 -P0 du -s 2>/dev/null | sort --numeric

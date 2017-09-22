@@ -1,0 +1,12 @@
+if [ "$1" == "" ];then
+  rev="HEAD"
+else
+  rev="$1"
+fi
+
+if [ -e ~/bin/showlinenum.awk ]; then
+  # Spent whole day on this, don't remember any details :D
+  git diff $rev --diff-filter=ACM --name-only | while read file;do rubocop $file | awk "/$(echo "$(echo $file | tr "/" '.'):("$((git diff HEAD $file | ~/bin/showlinenum.awk | awk -F':' '/^[0-9]+:/ {print $1}' | tr '\n' '|') | rev | cut -c 2- | rev)")")/ {print}";done | grep -v " C:"
+else
+  echo "~/bin/showlinenum.awk does not exist. Install it from https://github.com/jay/showlinenum"
+fi

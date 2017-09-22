@@ -1,0 +1,12 @@
+#!/bin/bash
+for f in $(git diff --diff-filter=ACM --name-only); do
+  git diff --color $f
+  read -p 'Decision:' -a decision
+  if [[ "$decision" =~ [yY] ]];then
+    git add "$f"
+    echo "Added"
+  else
+    echo "Skipping"
+  fi
+done
+
